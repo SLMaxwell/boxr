@@ -84,5 +84,15 @@ module Boxr
       schema
     end
 
+    def update_metadata_schema(scope, template_key, updates)
+      uri = "#{METADATA_TEMPLATES_URI}/#{scope}/#{template_key}/schema"
+
+      #in the event just one update is specified ensure that it is packaged inside an array
+      updates = [updates] unless updates.is_a? Array
+
+      schema, response = put(uri, updates, content_type: "application/json-patch+json")
+      schema
+    end
+
   end
 end
